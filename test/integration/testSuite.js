@@ -2,7 +2,9 @@ var Zombie = require('zombie');
 var expect = require('expect.js');
 
 var server = require('../../app').httpServer;
-var site = 'http://127.0.0.1:' + process.env.PORT || 3000;
+var site = 'http://127.0.0.1:' + (process.env.PORT || 3000);
+
+var screenTestCase = require('./screenTestCase');
 
 describe('running the integration test suite', function () {
   before(function () {
@@ -15,9 +17,11 @@ describe('running the integration test suite', function () {
       expect(this.server).not.to.be(undefined);
     });
     it('the Zombie.js client should be created', function () {
-      expect(this.client).not.to.be(undefined);
+      expect(this.client).to.be.a(Zombie);
     });
   });
+
+  screenTestCase.run();
 
   after(function (done) {
     this.client.close();
