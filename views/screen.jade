@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  #screen
+  #screen.page
     h1= title
     if (is_desktop || is_tv || is_bot)
       canvas#player(width='500', height='500')
