@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var Primus = require('primus');
 
 var app = express();
 
@@ -36,6 +37,16 @@ httpServer.listen(app.get('port'), function(){
   if ('development' === app.get('env')) {
     console.log('Express server listening on port ' + app.get('port'));
   }
+});
+
+var primus = new Primus(httpServer, { transformer: 'engine.io' });
+primus.on('connection', function (spark) {
+  spark.on('data', function (message) {
+    if (message === 'disconnect') {
+      spark.end();
+    }
+  })
+  spark.write('ping');
 });
 
 module.exports.httpServer = httpServer;

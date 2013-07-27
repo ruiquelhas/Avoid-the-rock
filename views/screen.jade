@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  script(type='text/javascript', src='/primus/primus.js')
+  script(type='text/javascript', src='/javascripts/controllers/screenController.js')
+  script(type='text/javascript').
+    window.screenController.init()
