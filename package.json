@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "make test",
-    "start": "node app.js"
+    "test": "./scripts/build; make test",
+    "start": "./scripts/build; node app.js"
   },
   "devDependencies": {
     "zombie": "*",
@@ -16,6 +16,8 @@
     "express": "3.3.4",
     "jade": "*",
     "primus": "*",
-    "engine.io": "*"
+    "engine.io": "*",
+    "browserify": "*",
+    "jquery-browserify": "*"
   }
 }

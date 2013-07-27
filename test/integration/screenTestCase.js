@@ -33,6 +33,10 @@ module.exports.run = function () {
     });
 
     describe('test the essential page contents', function () {
+      it('the client should have a reference to the jQuery library', function () {
+        expect(context.window.jQuery).not.to.be(undefined);
+      });
+
       it('the page should have two different canvas', function () {
         expect($('canvas').length).to.be(2);
       });

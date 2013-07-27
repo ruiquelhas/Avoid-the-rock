@@ -1,0 +1,2 @@
+#!/bin/bash
+./node_modules/.bin/browserify ./public/javascripts/controllers/screenController.js > ./public/javascripts/compiled/screenController.js

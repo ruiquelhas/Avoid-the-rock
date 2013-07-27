@@ -1,3 +1,5 @@
+var $ = require('jquery-browserify');
+
 self = window.screenController = window.screenController || {};
 
 self.init = self.init || function () {
