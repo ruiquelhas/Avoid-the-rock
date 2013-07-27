@@ -3,11 +3,14 @@ var expect = require('expect.js');
 var Primus = require('primus');
 
 module.exports.run = function () {
-  var context;
+  var context, $;
 
   beforeEach(function (done) {
     context = this.client;
-    context.visit('/screen', done);
+    context.visit('/screen', function () {
+      $ = cheerio.load(context.html('#screen'));
+      done();
+    });
   });
 
   describe('test the availability of the screen page', function () {
@@ -31,8 +34,13 @@ module.exports.run = function () {
 
     describe('test the essential page contents', function () {
       it('the page should have two different canvas', function () {
-        $ = cheerio.load(context.html('#screen'));
         expect($('canvas').length).to.be(2);
+      });
+
+      it('the canvases should have the same dimensions', function () {
+        var $playerCanvas = $('#player'), $actionCanvas = $('#action');
+        expect($playerCanvas.attr('width')).to.be($actionCanvas.attr('width'));
+        expect($playerCanvas.attr('height')).to.be($actionCanvas.attr('height'));
       });
     });
   });
