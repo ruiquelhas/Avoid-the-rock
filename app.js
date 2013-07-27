@@ -8,6 +8,7 @@ var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 var Primus = require('primus');
+var device = require('express-device');
 
 var app = express();
 
@@ -18,6 +19,8 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(device.capture());
+app.enableDeviceHelpers();
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -18,6 +18,7 @@
     "primus": "*",
     "engine.io": "*",
     "browserify": "*",
-    "jquery-browserify": "*"
+    "jquery-browserify": "*",
+    "express-device": "*"
   }
 }

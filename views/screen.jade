@@ -3,11 +3,15 @@ extends layout
 block content
   #screen
     h1= title
-    canvas#player(width='500', height='500')
-    canvas#action(width='500', height='500')
+    if (is_desktop || is_tv || is_bot)
+      canvas#player(width='500', height='500')
+      canvas#action(width='500', height='500')
+    else
+      p Your device is not supported
 
-block append scripts
-  script(type='text/javascript', src='/primus/primus.js')
-  script(type='text/javascript', src='/javascripts/compiled/screenController.js')
-  script(type='text/javascript').
-    window.screenController.init()
+if (is_desktop || is_tv || is_bot)
+  block append scripts
+    script(type='text/javascript', src='/primus/primus.js')
+    script(type='text/javascript', src='/javascripts/compiled/screenController.js')
+    script(type='text/javascript').
+      window.screenController.init()
