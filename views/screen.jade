@@ -5,6 +5,8 @@ block content
     h1= title
     canvas#player(width='500', height='500')
     canvas#action(width='500', height='500')
+
+block append scripts
   script(type='text/javascript', src='/primus/primus.js')
   script(type='text/javascript', src='/javascripts/compiled/screenController.js')
   script(type='text/javascript').
