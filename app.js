@@ -43,7 +43,7 @@ primus.on('connection', function (spark) {
     if (message === 'disconnect') {
       spark.end();
     }
-  })
+  });
   spark.write('ping');
 });
 
