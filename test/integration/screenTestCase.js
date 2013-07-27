@@ -1,3 +1,4 @@
+var cheerio = require('cheerio');
 var expect = require('expect.js');
 var Primus = require('primus');
 
@@ -23,8 +24,15 @@ module.exports.run = function () {
         expect(context.window.Primus).not.to.be(undefined);
       });
 
-      it('should have a websocket available', function () {
+      it('the client should have a websocket available', function () {
         expect(context.window.screenController.primus).not.to.be(undefined);
+      });
+    });
+
+    describe('test the essential page contents', function () {
+      it('the page should have two different canvas', function () {
+        $ = cheerio.load(context.html('#screen'));
+        expect($('canvas').length).to.be(2);
       });
     });
   });
