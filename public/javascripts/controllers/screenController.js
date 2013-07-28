@@ -8,7 +8,7 @@ self.init = self.init || function () {
   self.primus = self.primus || new Primus(window.location.href);
 
   var hasCanvasSupport = function () {
-    if ($('<canvas></canvas>').get(0).getContext('2d')) {
+    if ($('<canvas></canvas>').get(0).getContext) {
       return true;
     }
     return false;

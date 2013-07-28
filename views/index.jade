@@ -4,3 +4,11 @@ block content
   #index.page
     h1= title
     p Welcome to #{title}
+    if (is_phone || is_tablet)
+      p Access the driver&nbsp;
+        a(href='#{driverResource}') here
+        |.
+    else
+      p Access the screen&nbsp;
+        a(href='#{screenResource}') here
+        |.

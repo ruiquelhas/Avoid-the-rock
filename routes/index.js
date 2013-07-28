@@ -6,7 +6,11 @@
 var mainTitle = 'Avoid the rock';
 
 exports.index = function (req, res) {
-  res.render('index', { title: mainTitle });
+  res.render('index', {
+    title: mainTitle,
+    screenResource: '/screen',
+    driverResource: '/driver'
+  });
 };
 
 exports.screen = function (req, res) {
