@@ -5,15 +5,15 @@ var Primus = require('primus');
 module.exports.run = function () {
   var context, $;
 
-  beforeEach(function (done) {
-    context = this.client;
-    context.visit('/screen', function () {
-      $ = cheerio.load(context.html('#screen'));
-      done();
-    });
-  });
-
   describe('test the availability of the screen page', function () {
+    beforeEach(function (done) {
+      context = this.client;
+      context.visit('/screen', function () {
+        $ = cheerio.load(context.html('#screen'));
+        done();
+      });
+    });
+
     it('the client should be able to visit the page', function () {
       expect(context.statusCode).to.be(200);
     });
@@ -51,9 +51,9 @@ module.exports.run = function () {
         expect($playerCanvas.attr('height')).to.be($actionCanvas.attr('height'));
       });
     });
-  });
 
-  afterEach(function () {
-    context.window.screenController.primus.write('disconnect');
+    afterEach(function () {
+      context.window.screenController.primus.write('disconnect');
+    });
   });
 };

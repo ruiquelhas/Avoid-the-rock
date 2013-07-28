@@ -32,6 +32,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/screen', routes.screen);
+app.get('/driver', routes.driver);
 
 var httpServer = http.createServer(app);
 httpServer.listen(app.get('port'), function(){

@@ -5,6 +5,7 @@ var server = require('../../app').httpServer;
 var site = 'http://127.0.0.1:' + (process.env.PORT || 3000);
 
 var screenTestCase = require('./screenTestCase');
+var driverTestCase = require('./driverTestCase');
 
 var userAgents = {
   zombieDefault: 'Bot',
@@ -33,6 +34,7 @@ describe('running the integration test suite', function () {
   });
 
   screenTestCase.run();
+  driverTestCase.run();
 
   after(function (done) {
     this.client.close();
