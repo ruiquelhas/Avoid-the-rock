@@ -2,3 +2,10 @@ extends layout
 
 block content
   #driver.page
+
+if (is_phone || is_tablet)
+  block append scripts
+    script(type='text/javascript', src='/javascripts/external/muzzley.js')
+    script(type='text/javascript', src='/javascripts/compiled/driverController.js')
+    script(type='text/javascript').
+      window.driverController.init()

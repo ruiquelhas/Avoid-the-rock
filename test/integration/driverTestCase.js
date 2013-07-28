@@ -16,5 +16,9 @@ module.exports.run = function () {
     it('the client should be able to visit the page', function () {
       expect(context.statusCode).to.be(200);
     });
+
+    it('the client should have a reference to the controller script', function () {
+      expect(context.window.driverController).not.to.be(undefined);
+    });
   });
 };
