@@ -32,9 +32,13 @@ module.exports.run = function () {
       });
     });
 
-    describe('test the essential page contents', function () {
+    describe('test the essential page components', function () {
       it('the client should have a reference to the jQuery library', function () {
         expect(context.window.jQuery).not.to.be(undefined);
+      });
+
+      it('the client should have a reference to the Muzzley library', function () {
+        expect(context.window.muzzley).not.to.be(undefined);
       });
 
       it('the page should have two different canvas', function () {

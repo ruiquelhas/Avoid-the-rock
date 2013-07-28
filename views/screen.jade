@@ -12,6 +12,7 @@ block content
 if (is_desktop || is_tv || is_bot)
   block append scripts
     script(type='text/javascript', src='/primus/primus.js')
+    script(type='text/javascript', src='/javascripts/external/muzzley.js')
     script(type='text/javascript', src='/javascripts/compiled/screenController.js')
     script(type='text/javascript').
       window.screenController.init()
