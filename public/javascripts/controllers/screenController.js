@@ -1,5 +1,7 @@
 var $ = require('jquery-browserify');
 
+var ImageRepository = require('../helpers/imageRepository');
+
 self = window.screenController = window.screenController || {};
 
 self.init = self.init || function () {
@@ -16,6 +18,13 @@ self.init = self.init || function () {
 
   if (hasCanvasSupport()) {
     // do beautiful things
+    var imageRepository = ImageRepository.create({
+      player: '/images/muzzley.png',
+      rock: '/images/rock.png'
+    });
+    imageRepository.load(function (images) {
+      console.log(images);
+    });
   } else {
     $statusParagraph.text('Your browser does not have canvas support.');
   }
