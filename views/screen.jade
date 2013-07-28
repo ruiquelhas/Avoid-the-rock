@@ -2,12 +2,13 @@ extends layout
 
 block content
   #screen.page
-    h1= title
     if (is_desktop || is_tv || is_bot)
+      h1= title
+      p#status= status.desktopDevice
       canvas#player(width='500', height='500')
       canvas#action(width='500', height='500')
     else
-      p Your device is not supported
+      p#status.centeredText.boldText.largerText= status.mobileDevice
 
 if (is_desktop || is_tv || is_bot)
   block append scripts

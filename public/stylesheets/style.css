@@ -5,20 +5,27 @@ html, body {
   width: 100%;
 }
 
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+body { font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF;
-}
+a { color: #00B7FF; }
 
-.page {
-  padding: 5%;
-}
+.page { padding: 5%; }
+
+.centeredText { text-align: center; }
+
+.boldText { font-weight: bold; }
+
+.smallText { font-size: 0.8em; }
+.smallerText { font-size: 0.5em; }
+.tinyText { font-size: 0.2em; }
+
+.largeText { font-size: 1.2em; }
+.largerText { font-size: 1.5em; }
+.hugeText { font-size: 1.8em; }
 
 #screen canvas {
   border: 1px solid black;
+  display: none;
   left: 5%;
   position: absolute;
   top: 20%;

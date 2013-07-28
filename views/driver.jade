@@ -2,6 +2,10 @@ extends layout
 
 block content
   #driver.page
+    if (is_phone || is_tablet)
+      p#status.centeredText.boldText.largerText= status.mobileDevice
+    else
+      p#status.centeredText.boldText.largerText= status.desktopDevice
 
 if (is_phone || is_tablet)
   block append scripts
