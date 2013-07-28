@@ -24,9 +24,18 @@ a { color: #00B7FF; }
 .hugeText { font-size: 1.8em; }
 
 #screen canvas {
+  background: transparent;
   border: 1px solid black;
   display: none;
   left: 5%;
   position: absolute;
   top: 20%;
+}
+
+#screen #action {
+  z-index: -1;
+}
+
+#screen #player {
+  z-index: 0;
 }
