@@ -1,4 +1,4 @@
-var $ = require('jquery-browserify');
+var moment = require('moment');
 
 function RankingController(selector, socket) {
   this.selector = selector;
@@ -8,11 +8,11 @@ function RankingController(selector, socket) {
 function createRankingEntryDOMString(entry) {
   return [
     '<li class="ranking-entry">',
-    '<div class="ranking-entry-date">',
-    entry.date,
-    '</div>',
     '<div class="ranking-entry-points">',
     entry.points,
+    ' point(s)</div>',
+    '<div class="ranking-entry-date">',
+    moment(entry.date).fromNow(),
     '</div>',
     '</li>'
   ].join('');
