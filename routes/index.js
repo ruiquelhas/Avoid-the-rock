@@ -5,6 +5,10 @@
 
 var mainTitle = 'Avoid the rock';
 
+function getFullRequestURL(req, resource) {
+  return [req.secure ? 'https' : 'http', '://', req.get('Host'), '/', resource].join('');
+}
+
 exports.index = function (req, res) {
   res.render('index', {
     title: mainTitle,
@@ -16,11 +20,9 @@ exports.index = function (req, res) {
 exports.screen = function (req, res) {
   res.render('screen', {
     title: mainTitle,
-    status: {
-      desktopDevice: 'Connect to the driver using a mobile device.',
-      mobileDevice: 'The screen is not available on mobile devices.'
-    },
-    rankingLabel: 'Ranking'
+    rankingLabel: 'Ranking',
+    driverResource: getFullRequestURL(req, 'driver'),
+    mobileDeviceMessage: 'The screen is not available on mobile devices.'
   });
 };
 

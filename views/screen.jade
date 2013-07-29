@@ -4,14 +4,17 @@ block content
   #screen.page
     if (is_desktop || is_tv || is_bot)
       h1= title
-      p#status= status.desktopDevice
+      p#status
+        | Connect to&nbsp;
+        a(href='#{driverResource}')= driverResource
+        | &nbsp;with your mobile device's browser and wait for the screen to load.
       #canvases
         canvas#player(width='500', height='500')
         canvas#action(width='500', height='500')
       h2#ranking-label= rankingLabel
       ol#ranking-list
     else
-      p#status.centeredText.boldText.largerText= status.mobileDevice
+      p#status.centeredText.boldText.largerText= mobileDeviceMessage
 
 block append scripts
   if (is_desktop || is_tv || is_bot)
