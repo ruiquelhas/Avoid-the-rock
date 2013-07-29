@@ -20,6 +20,7 @@
     "engine.io": "*",
     "browserify": "*",
     "jquery-browserify": "*",
-    "express-device": "*"
+    "express-device": "*",
+    "mongoose": "*"
   }
 }

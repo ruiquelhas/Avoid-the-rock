@@ -35,8 +35,7 @@ self.init = self.init || function () {
         self.statusController.displayMessage('[MUZZLEY]', err);
       } else {
         self.statusController.hideMessage();
-        // display the canvases
-        $('canvas').show();
+        self.playerCanvasController.showCanvas();
       }
     });
   } else {
@@ -52,9 +51,9 @@ self.connect = self.connect || function (callback) {
   }, function (err, activity) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
-      // do something
+      self.playerCanvasController.saveScore();
       self.playerCanvasController.erasePlayer();
-      $('canvas').hide();
+      self.playerCanvasController.hideCanvas();
       self.statusController.displayMessage();
     });
     activity.on('participantJoin', function (participant) {

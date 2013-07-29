@@ -1,7 +1,8 @@
 var Zombie = require('zombie');
 var expect = require('expect.js');
 
-var server = require('../../app').httpServer;
+// var server = require('../../app').httpServer;
+var app = require('../../app');
 var site = 'http://127.0.0.1:' + (process.env.PORT || 3000);
 
 var screenTestCase = require('./screenTestCase');
@@ -16,11 +17,15 @@ var userAgents = {
 };
 
 describe('running the integration test suite', function () {
-  before(function () {
-    this.server = server;
-    this.client = new Zombie({
-      site: site,
-      userAgent: userAgents.zombieDefault
+  before(function (done) {
+    var self = this;
+    app.loadApp(function (server) {
+      self.server = server;
+      self.client = new Zombie({
+        site: site,
+        userAgent: userAgents.zombieDefault
+      });
+      done();
     });
   });
 

@@ -47,6 +47,24 @@ PlayerCanvasController.prototype.movePlayerRight = function (delta) {
   }
 };
 
+PlayerCanvasController.prototype.saveScore = function (socket) {
+  socket.write({
+    type: 'score-update',
+    payload: {
+      'date': new Date(),
+      'points': this.player.score
+    }
+  });
+};
+
+PlayerCanvasController.prototype.showCanvas = function () {
+  this.selector.show();
+};
+
+PlayerCanvasController.prototype.hideCanvas = function () {
+  this.selector.hide();
+};
+
 module.exports.create = function (player, selector) {
   return new PlayerCanvasController(player, selector);
 };

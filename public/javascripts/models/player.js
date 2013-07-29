@@ -1,4 +1,7 @@
 var Player = function (image, x, y) {
+  this.alive = true;
+  this.score = 0;
+
   this.image = image;
 
   this.x = x;
@@ -10,6 +13,14 @@ var Player = function (image, x, y) {
 
 Player.prototype.move = function (delta) {
   this.x += delta;
+};
+
+Player.prototype.updateScore = function () {
+  this.score += 1;
+};
+
+Player.prototype.kill = function () {
+  this.alive = false;
 };
 
 module.exports.create = function (image, x, y) {

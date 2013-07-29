@@ -53,7 +53,7 @@ module.exports.run = function () {
     });
 
     afterEach(function () {
-      context.window.screenController.primus.write('disconnect');
+      context.window.screenController.primus.write({ type: 'disconnect' });
     });
   });
 };
