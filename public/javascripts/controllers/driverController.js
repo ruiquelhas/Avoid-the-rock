@@ -10,6 +10,7 @@ self.muzzleyWidgetType = self.muzzleyWidgetType || 'webview';
 self.muzzleyWidgetEvent = self.muzzleyWidgetEvent || 'rotate';
 
 self.responseThreshold = self.responseThreshold || 2;
+self.responseRate = self.responseRate || 8;
 
 self.statusController = self.statusController || {};
 
@@ -46,25 +47,25 @@ self.connect = self.connect || function (callback) {
 };
 
 self.manageDeviceOrientation = self.manageDeviceOrientation || function (user) {
-  var previousGammaValue = 0;
+  var previousRecordedValue = 0;
 
   function sendAction(ev) {
     ev.preventDefault();
-    var referenceValue = ev.gamma;
+    var referenceValue = ev.alpha;
 
     var widgetData = {
       "w": self.muzzleyWidgetType,
       "e": self.muzzleyWidgetEvent,
-      "v": referenceValue
+      "v": self.responseRate
     };
 
-    if (referenceValue > previousGammaValue) {
-      previousGammaValue = referenceValue + self.responseThreshold;
-      widgetData.c = 'right';
-      user.sendWidgetData(widgetData);
-    } else if (referenceValue < previousGammaValue) {
-      previousGammaValue = referenceValue - self.responseThreshold;
+    if (referenceValue > previousRecordedValue) {
+      previousRecordedValue = referenceValue;
       widgetData.c = 'left';
+      user.sendWidgetData(widgetData);
+    } else if (referenceValue < previousRecordedValue) {
+      previousRecordedValue = referenceValue;
+      widgetData.c = 'right';
       user.sendWidgetData(widgetData);
     }
   }

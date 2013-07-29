@@ -53,6 +53,7 @@ self.connect = self.connect || function (callback) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
       // do something
+      self.playerCanvasController.erasePlayer();
       $('canvas').hide();
       self.statusController.displayMessage();
     });

@@ -39,3 +39,8 @@ a { color: #00B7FF; }
 #screen #player {
   z-index: 0;
 }
+
+#driver #instructions {
+  display: block;
+  margin: 0 auto;
+}

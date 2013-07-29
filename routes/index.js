@@ -27,7 +27,7 @@ exports.driver = function (req, res) {
   res.render('driver', {
     status: {
       desktopDevice: 'You can only control the object using a mobile device.',
-      mobileDevice: 'Rotate your device on the z-axis to move the object.'
+      mobileDevice: 'Move your device like the image.'
     }
   });
 };

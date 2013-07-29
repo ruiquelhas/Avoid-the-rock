@@ -4,6 +4,7 @@ block content
   #driver.page
     if (is_phone || is_tablet)
       p#status.centeredText.boldText.largerText= status.mobileDevice
+      img#instructions(src='/images/alpha.png')
     else
       p#status.centeredText.boldText.largerText= status.desktopDevice
 
