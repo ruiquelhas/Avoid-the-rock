@@ -25,7 +25,7 @@ self.init = self.init || function () {
       if (err) {
         self.statusController.displayMessage('[MUZZLEY]', err);
       }
-    })
+    });
   } else {
     self.statusController.displayMessage('Your browser does not support orientation events.');
   }
