@@ -1,13 +1,13 @@
 function StatusController(selector, message) {
   this.selector = selector;
-  this.message = message || selector.text();
+  this.message = message || selector.html();
 }
 
 StatusController.prototype.displayMessage = function (message) {
   if (message) {
     this.message = message;
   }
-  this.selector.text(this.message);
+  this.selector.html(this.message);
   this.selector.show();
 };
 

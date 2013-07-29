@@ -21,14 +21,11 @@ function createRankingEntryDOMString(entry) {
 RankingController.prototype.bind = function () {
   var self = this, entry;
   self.socket.on('data', function (data) {
-    if (data.type === 'ranking-full-update') {
+    if (data.type === 'ranking-update') {
       for (var i = 0, len = data.payload.length; i < len; i++) {
         entry = createRankingEntryDOMString(data.payload[i]);
         self.selector.append(entry);
       }
-    } else if (data.type === 'ranking-incremental-update') {
-      entry = createRankingEntryDOMString(data.payload);
-      self.selector.append(entry);
     }
   });
 };

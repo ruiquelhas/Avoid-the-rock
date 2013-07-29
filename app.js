@@ -42,40 +42,40 @@ app.get('/driver', routes.driver);
 
 mongoose.connect(dbAddress);
 
-var scoreController, httpServer, primus;
+var scoreController;
 
 function setUpWebServer(callback) {
-  httpServer = http.createServer(app);
-  httpServer.listen(app.get('port'), function(){
+  var server = http.createServer(app);
+  server.listen(app.get('port'), function(){
     if ('development' === app.get('env')) {
-      console.log('Express server listening on port ' + app.get('port'));
+      console.log('[INFO] Express server listening on port ' + app.get('port'));
     }
   });
-  return callback(httpServer);
+  return callback(server);
 }
 
 function setUpRealtimeMiddleware(server, callback) {
-  primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
+  var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
   primus.on('connection', function (spark) {
+    function sendOrderedScoreList() {
+      scoreController.allScores(function (err, scores) {
+        if (err) console.log('[ERROR]', err);
+        else spark.write({ type: 'ranking-update', payload: scores });
+      });
+    }
+
     spark.on('data', function (message) {
       if (message.type === 'score-update') {
-        scoreController.saveScore(message.payload, function (err, score) {
-          spark.write(score);
+        scoreController.saveScore(message.payload, function (err) {
+          if (err) console.log('[ERROR]', err);
+          else sendOrderedScoreList();
         });
       } else if (message.type === 'disconnect') {
         spark.end();
       }
     });
-    scoreController.allScores(function (err, scores) {
-      if (!err) {
-        spark.write({
-          type: 'ranking-full-update',
-          payload: scores
-        });
-      } else {
-        console.log(err);
-      }
-    });
+
+    sendOrderedScoreList();
   });
   return callback(server);
 }
@@ -83,11 +83,9 @@ function setUpRealtimeMiddleware(server, callback) {
 function loadApp(callback) {
   scoreController = ScoreController.create(Score, mongoose.connection);
   scoreController.init(function (err) {
-    if (!err) {
-      setUpWebServer(function (server) {
-        setUpRealtimeMiddleware(server, callback);
-      });
-    }
+    if (!err) setUpWebServer(function (server) {
+      setUpRealtimeMiddleware(server, callback);
+    });
   });
 }
 
@@ -95,6 +93,6 @@ module.exports.loadApp = loadApp;
 
 if (!module.parent) {
   loadApp(function (server) {
-    if (server) console.log('All components have been installed');
+    if (server) console.log('[INFO] All components have been installed');
   });
 }
