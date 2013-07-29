@@ -8,7 +8,7 @@ PlayerCanvasController.prototype.drawPlayer = function () {
     .get(0)
     .getContext('2d')
     .drawImage(this.player.image, this.player.x, this.player.y,
-      this.player.image.width, this.player.image.height);
+      this.player.width, this.player.height);
 };
 
 PlayerCanvasController.prototype.erasePlayer = function () {
@@ -16,7 +16,7 @@ PlayerCanvasController.prototype.erasePlayer = function () {
     .get(0)
     .getContext('2d')
     .clearRect(this.player.x, this.player.y,
-      this.player.image.width, this.player.image.height);
+      this.player.width, this.player.height);
 };
 
 PlayerCanvasController.prototype.movePlayerLeft = function (delta) {
