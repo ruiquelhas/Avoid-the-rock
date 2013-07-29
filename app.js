@@ -92,3 +92,9 @@ function loadApp(callback) {
 }
 
 module.exports.loadApp = loadApp;
+
+if (!module.parent) {
+  loadApp(function (server) {
+    if (server) console.log('All components have been installed');
+  });
+}
