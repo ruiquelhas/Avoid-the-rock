@@ -5,6 +5,7 @@ var Player = require('../models/player');
 
 var PlayerCanvasController = require('./playerCanvasController');
 var StatusController = require('./statusController');
+var RankingController = require('./rankingController');
 
 self = window.screenController = window.screenController || {};
 
@@ -13,6 +14,7 @@ self.muzzleyActivityId = self.muzzleyActivityId || 'df7950';
 
 self.playerCanvasController = self.playerCanvasController || {};
 self.statusController = self.statusController || {};
+self.rankingController = self.rankingController || {};
 
 self.init = self.init || function () {
   var $statusParagraph = $('#status');
@@ -20,6 +22,10 @@ self.init = self.init || function () {
 
   // should always have access to ranking updates
   self.primus = self.primus || new Primus(window.location.href);
+
+  var $rankingList = $('#ranking-list');
+  self.rankingController = RankingController.create($rankingList, self.primus);
+  self.rankingController.bind();
 
   var hasCanvasSupport = function () {
     if ($('<canvas></canvas>').get(0).getContext) {

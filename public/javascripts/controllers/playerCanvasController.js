@@ -58,11 +58,13 @@ PlayerCanvasController.prototype.saveScore = function (socket) {
 };
 
 PlayerCanvasController.prototype.showCanvas = function () {
+  this.selector.parent().show();
   this.selector.show();
 };
 
 PlayerCanvasController.prototype.hideCanvas = function () {
   this.selector.hide();
+  this.selector.parent().hide();
 };
 
 module.exports.create = function (player, selector) {

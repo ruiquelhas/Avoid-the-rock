@@ -3,7 +3,7 @@ extends layout
 block content
   #driver.page
     if (is_phone || is_tablet)
-      p#status.centeredText.boldText.largerText= status.mobileDevice
+      p#status.centeredText.boldText.largeText= status.mobileDevice
       img#instructions(src='/images/alpha.png')
     else
       p#status.centeredText.boldText.largerText= status.desktopDevice

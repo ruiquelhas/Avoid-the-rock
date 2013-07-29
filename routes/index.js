@@ -19,7 +19,8 @@ exports.screen = function (req, res) {
     status: {
       desktopDevice: 'Connect to the driver using a mobile device.',
       mobileDevice: 'The screen is not available on mobile devices.'
-    }
+    },
+    rankingLabel: 'Ranking'
   });
 };
 
