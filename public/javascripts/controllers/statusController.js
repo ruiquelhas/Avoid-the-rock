@@ -8,6 +8,7 @@ StatusController.prototype.displayMessage = function (message) {
     this.message = message;
   }
   this.selector.text(this.message);
+  this.selector.show();
 };
 
 StatusController.prototype.hideMessage = function () {

@@ -22,10 +22,12 @@ PlayerCanvasController.prototype.erasePlayer = function () {
 PlayerCanvasController.prototype.movePlayerLeft = function (delta) {
   if (delta > 0) {
     this.erasePlayer();
-    if (this.player.x - delta >= this.selector.offset().left) {
+    // left margin = 1 (because it has 1px border)
+    var marginLeft = 1;
+    if (this.player.x - delta > marginLeft) {
       this.player.move(-delta);
     } else {
-      this.player.move(-this.player.x);
+      this.player.move(-(this.player.x - marginLeft));
     }
     this.drawPlayer();
   }
@@ -34,10 +36,12 @@ PlayerCanvasController.prototype.movePlayerLeft = function (delta) {
 PlayerCanvasController.prototype.movePlayerRight = function (delta) {
   if (delta > 0) {
     this.erasePlayer();
-    if (this.player.x + delta <= this.selector.offset().right) {
+    // right margin = width - 1 (it has a 1px border)
+    var marginRight = this.selector.width() - 1;
+    if (this.player.x + this.player.width + delta < marginRight) {
       this.player.move(delta);
     } else {
-      this.player.move(this.player.x);
+      this.player.move(marginRight - this.player.x - this.player.width);
     }
     this.drawPlayer();
   }

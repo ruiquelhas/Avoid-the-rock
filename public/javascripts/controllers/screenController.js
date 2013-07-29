@@ -30,7 +30,7 @@ self.init = self.init || function () {
 
   if (hasCanvasSupport()) {
     // first, connect to the muzzley platform
-    self.connect(function (err, user) {
+    self.connect(function (err) {
       if (err) {
         self.statusController.displayMessage('[MUZZLEY]', err);
       } else {
@@ -53,6 +53,8 @@ self.connect = self.connect || function (callback) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
       // do something
+      $('canvas').hide();
+      self.statusController.displayMessage();
     });
     activity.on('participantJoin', function (participant) {
       self.run(participant, callback);
@@ -75,6 +77,18 @@ self.run = self.run || function (user, callback) {
 
     self.playerCanvasController = PlayerCanvasController.create(player, $playerCanvas);
     self.playerCanvasController.drawPlayer();
-    callback(null, user);
+
+    self.manage(user);
+    callback();
+  });
+};
+
+self.manage = self.manage || function (user) {
+  user.on('action', function (action) {
+    if (action.c === 'right') {
+      self.playerCanvasController.movePlayerRight(action.v);
+    } else if (action.c === 'left') {
+      self.playerCanvasController.movePlayerLeft(action.v);
+    }
   });
 };
