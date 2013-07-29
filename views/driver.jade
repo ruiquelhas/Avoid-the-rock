@@ -7,8 +7,8 @@ block content
     else
       p#status.centeredText.boldText.largerText= status.desktopDevice
 
-if (is_phone || is_tablet)
-  block append scripts
+block append scripts
+  if (is_phone || is_tablet || is_bot)
     script(type='text/javascript', src='/javascripts/external/muzzley.js')
     script(type='text/javascript', src='/javascripts/compiled/driverController.js')
     script(type='text/javascript').
