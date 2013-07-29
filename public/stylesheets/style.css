@@ -47,4 +47,4 @@ a { color: #00B7FF; }
 #screen #ranking-label { margin-top: 4%; }
 
 #screen #ranking-list .ranking-entry > div { display: inline-block; }
-#screen #ranking-list .ranking-entry > div:nth-child(2) { padding-left: 2%; }
+#screen #ranking-list .ranking-entry > div:nth-child(2) { padding-left: 1%; }
