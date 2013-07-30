@@ -86,6 +86,6 @@ user experience sucks a lot.
 The rocks are images, which implicitly makes them squares (awesome), and you will laugh as soon as they overlap each
 other since you will be able to see the square area.
 
-Also, if you happen to be "forced" to quit the game with a "close call", it means you probably hit the "invisble"
+Also, if you happen to be "forced" to quit the game with a "close call", it means you probably hit the "invisible"
 square area. As might also noticed, the context is not that great, there are no sessions, no reference to current
 score and you will have to guess which ones are yours from the ranking.
