@@ -1,10 +1,15 @@
 var expect = require('expect.js');
 var sinon = require('sinon');
 
+var Primus = require('primus');
 var Player = require('../../public/javascripts/models/player.js');
 
 module.exports.run = function () {
-  var imageMock = { width: 46, height: 46 }, x = 0, y = 0;
+  var imageMock = { width: 46, height: 46 };
+  var canvasMock = { width: 500, height: 500 };
+  var x = canvasMock.width / 2 - imageMock.width / 2;
+  var y = canvasMock.height - imageMock.height;
+  var leftMargin = 1, rightMargin = canvasMock.width - 1;
 
   describe('test the player class', function () {
     beforeEach(function () {
@@ -25,14 +30,27 @@ module.exports.run = function () {
       expect(this.player.y).to.be(y);
     });
 
-    it('has a move method available', function () {
-      expect(this.player.move).not.to.be(undefined);
+    it('should move delta pixels left and right when delta does not exceed margin', function () {
+      var delta = 10, diff = this.player.x - delta;
+      this.player.move(-delta, leftMargin, canvasMock);
+      expect(this.player.x).to.be(diff);
+      this.player.move(delta, rightMargin, canvasMock);
+      expect(this.player.x).to.be(x);
     });
 
-    // it('the move method should increment x with a value of delta', function () {
-    //   var delta = 10, diff = this.player.x + delta;
-    //   this.player.move(delta);
-    //   expect(this.player.x).to.be(diff);
-    // });
+    it('should move to the margin when the delta exceeds it', function () {
+      var delta = canvasMock.width + 1, diff = rightMargin - this.player.width;
+      this.player.move(-delta, leftMargin, canvasMock);
+      expect(this.player.x).to.be(leftMargin);
+      this.player.move(delta, rightMargin, canvasMock);
+      expect(this.player.x).to.be(diff);
+    });
+
+    it('should increment the score with the update value', function () {
+      var expected = this.player.score + 1;
+      this.player.update(1);
+      expect(this.player.score).to.be(expected);
+    });
+
   });
 };
