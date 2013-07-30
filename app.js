@@ -57,7 +57,7 @@ function setUpWebServer(callback) {
 function setUpRealtimeMiddleware(server, callback) {
   var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
   primus.on('connection', function (spark) {
-    function sendOrderedScoreList() {
+    function sendCurrentRanking() {
       playerController.ranking(function (err, players) {
         if (err) console.log('[ERROR]', err);
         else spark.write({ type: 'ranking-update', payload: players });
@@ -66,16 +66,17 @@ function setUpRealtimeMiddleware(server, callback) {
 
     spark.on('data', function (message) {
       if (message.type === 'score-update') {
-        playerController.saveScore(message.payload, function (err) {
+        var player = new Player(message.payload);
+        playerController.saveScore(player, function (err) {
           if (err) console.log('[ERROR]', err);
-          else sendOrderedScoreList();
+          else sendCurrentRanking();
         });
       } else if (message.type === 'disconnect') {
         spark.end();
       }
     });
 
-    sendOrderedScoreList();
+    sendCurrentRanking();
   });
   return callback(server);
 }

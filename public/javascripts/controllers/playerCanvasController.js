@@ -28,6 +28,10 @@ PlayerCanvasController.prototype.movePlayerRight = function (delta) {
   }
 };
 
+PlayerCanvasController.prototype.updateScore = function (points) {
+  this.player.update(points);
+};
+
 PlayerCanvasController.prototype.saveScore = function () {
   this.player.save(this.server);
 };

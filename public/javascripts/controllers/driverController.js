@@ -15,7 +15,7 @@ self.responseRate = self.responseRate || 8;
 self.statusController = self.statusController || {};
 
 self.init = self.init || function () {
-  self.statusController = StatusController.create($('#status'));
+  self.statusController = StatusController.create($('#driver #status'));
 
   function listensToOrientationEvents() {
     if (window.DeviceOrientationEvent) {

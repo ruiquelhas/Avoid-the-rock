@@ -33,9 +33,16 @@ Player.prototype.move = function (delta, margin, canvas) {
   }
 };
 
+Player.prototype.update = function (points) {
+  this.score += points;
+}
+
 Player.prototype.save = function (server) {
   var playerScore = this.score;
-  server.write({ type: SERVER_MESSAGE, payload: { date: new Date(), score: playerScore } });
+  if (playerScore > -1) {
+    server.write({ type: SERVER_MESSAGE, payload: { date: new Date(), score: playerScore } });
+  }
+  this.score = -1;
 };
 
 module.exports.create = function (image, x, y) {

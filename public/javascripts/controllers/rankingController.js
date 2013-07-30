@@ -22,6 +22,7 @@ RankingController.prototype.bind = function () {
   var self = this, entry;
   self.server.on('data', function (data) {
     if (data.type === 'ranking-update') {
+      self.selector.empty();
       for (var i = 0, len = data.payload.length; i < len; i++) {
         entry = createRankingEntryDOMString(data.payload[i]);
         self.selector.append(entry);

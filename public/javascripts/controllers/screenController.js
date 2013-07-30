@@ -2,8 +2,10 @@ var $ = require('jquery-browserify');
 
 var ImageRepository = require('../helpers/imageRepository');
 var Player = require('../models/player');
+var RockPool = require('../helpers/rockPool');
 
 var PlayerCanvasController = require('./playerCanvasController');
+var RockCanvasController = require('./rockCanvasController');
 var StatusController = require('./statusController');
 var RankingController = require('./rankingController');
 
@@ -12,12 +14,15 @@ self = window.screenController = window.screenController || {};
 self.muzzleyAppToken = self.muzzleyAppToken || '7346780ed56a4033';
 self.muzzleyActivityId = self.muzzleyActivityId || 'df7950';
 
+self.rockGenerator = self.rockGenerator || null;
+
 self.playerCanvasController = self.playerCanvasController || {};
+self.rockCanvasController = self.rockCanvasController || {}
 self.statusController = self.statusController || {};
 self.rankingController = self.rankingController || {};
 
 self.init = self.init || function () {
-  var $statusParagraph = $('#status');
+  var $statusParagraph = $('#screen #status');
   self.statusController = StatusController.create($statusParagraph);
 
   // should always have access to ranking updates
@@ -42,6 +47,7 @@ self.init = self.init || function () {
       } else {
         self.statusController.hideMessage();
         self.playerCanvasController.showCanvas();
+        self.rockCanvasController.showCanvas();
       }
     });
   } else {
@@ -50,15 +56,19 @@ self.init = self.init || function () {
 };
 
 self.connect = self.connect || function (callback) {
-  muzzley.on('error', callback);
+  muzzley.on('error', function (err) {
+    return callback(err);
+  });
   muzzley.connectApp({
     token: self.muzzleyAppToken,
     activityId: self.muzzleyActivityId
   }, function (err, activity) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
+      clearInterval(self.rockGenerator);
       self.playerCanvasController.saveScore();
       self.playerCanvasController.erasePlayer();
+      self.rockCanvasController.hideCanvas();
       self.playerCanvasController.hideCanvas();
       self.statusController.displayMessage();
     });
@@ -75,14 +85,24 @@ self.run = self.run || function (user, callback) {
   });
 
   imageRepository.load(function (images) {
-    var $playerCanvas = $('#player');
+    var $playerCanvas = $('#player'), $actionCanvas = $('#action');
+
     var playerX = $playerCanvas.get(0).width / 2 - images.player.width / 2;
     var playerY = $playerCanvas.get(0).height - images.player.height;
-
     var player = Player.create(images.player, playerX, playerY);
 
     self.playerCanvasController = PlayerCanvasController.create(player, $playerCanvas, self.primus);
     self.playerCanvasController.drawPlayer();
+
+    var rockPool = RockPool.create(8);
+    rockPool.init(images.rock);
+
+    self.rockCanvasController = RockCanvasController.create(rockPool, $actionCanvas);
+    self.rockGenerator = setInterval(function () {
+      self.rockCanvasController.drawRock(images.rock);
+      var points = rockPool.animate($actionCanvas.get(0));
+      self.playerCanvasController.updateScore(points);
+    }, 1000 / 60);
 
     self.manage(user);
     callback();
