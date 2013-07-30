@@ -57,7 +57,7 @@ self.connect = self.connect || function (callback) {
   }, function (err, activity) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
-      self.playerCanvasController.saveScore(self.primus);
+      self.playerCanvasController.saveScore();
       self.playerCanvasController.erasePlayer();
       self.playerCanvasController.hideCanvas();
       self.statusController.displayMessage();
@@ -81,7 +81,7 @@ self.run = self.run || function (user, callback) {
 
     var player = Player.create(images.player, playerX, playerY);
 
-    self.playerCanvasController = PlayerCanvasController.create(player, $playerCanvas);
+    self.playerCanvasController = PlayerCanvasController.create(player, $playerCanvas, self.primus);
     self.playerCanvasController.drawPlayer();
 
     self.manage(user);

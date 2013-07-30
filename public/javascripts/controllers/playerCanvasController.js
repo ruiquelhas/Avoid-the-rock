@@ -1,6 +1,7 @@
-function PlayerCanvasController(player, selector) {
+function PlayerCanvasController(player, selector, server) {
   this.player = player;
   this.selector = selector;
+  this.server = server;
 }
 
 PlayerCanvasController.prototype.drawPlayer = function () {
@@ -27,14 +28,8 @@ PlayerCanvasController.prototype.movePlayerRight = function (delta) {
   }
 };
 
-PlayerCanvasController.prototype.saveScore = function (socket) {
-  socket.write({
-    type: 'score-update',
-    payload: {
-      'date': new Date(),
-      'points': this.player.score
-    }
-  });
+PlayerCanvasController.prototype.saveScore = function () {
+  this.player.save(this.server);
 };
 
 PlayerCanvasController.prototype.showCanvas = function () {
@@ -47,6 +42,6 @@ PlayerCanvasController.prototype.hideCanvas = function () {
   this.selector.parent().hide();
 };
 
-module.exports.create = function (player, selector) {
-  return new PlayerCanvasController(player, selector);
+module.exports.create = function (player, selector, server) {
+  return new PlayerCanvasController(player, selector, server);
 };

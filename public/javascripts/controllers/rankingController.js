@@ -1,15 +1,15 @@
 var moment = require('moment');
 
-function RankingController(selector, socket) {
+function RankingController(selector, server) {
   this.selector = selector;
-  this.socket = socket;
+  this.server = server;
 }
 
 function createRankingEntryDOMString(entry) {
   return [
     '<li class="ranking-entry">',
-    '<div class="ranking-entry-points">',
-    entry.points,
+    '<div class="ranking-entry-score">',
+    entry.score,
     ' point(s)</div>',
     '<div class="ranking-entry-date">',
     moment(entry.date).fromNow(),
@@ -20,7 +20,7 @@ function createRankingEntryDOMString(entry) {
 
 RankingController.prototype.bind = function () {
   var self = this, entry;
-  self.socket.on('data', function (data) {
+  self.server.on('data', function (data) {
     if (data.type === 'ranking-update') {
       for (var i = 0, len = data.payload.length; i < len; i++) {
         entry = createRankingEntryDOMString(data.payload[i]);
@@ -30,6 +30,6 @@ RankingController.prototype.bind = function () {
   });
 };
 
-module.exports.create = function (selector, socket) {
-  return new RankingController(selector, socket);
+module.exports.create = function (selector, server) {
+  return new RankingController(selector, server);
 };

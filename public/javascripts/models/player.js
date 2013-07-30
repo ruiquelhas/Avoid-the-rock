@@ -1,3 +1,5 @@
+var SERVER_MESSAGE = 'score-update';
+
 var Player = function (image, x, y) {
   this.score = 0;
 
@@ -29,6 +31,11 @@ Player.prototype.move = function (delta, margin, canvas) {
   } else {
     this.x += (this.x + this.width + delta < margin) ? delta : margin - this.x - this.width;
   }
+};
+
+Player.prototype.save = function (server) {
+  var playerScore = this.score;
+  server.write({ type: SERVER_MESSAGE, payload: { date: new Date(), score: playerScore } });
 };
 
 module.exports.create = function (image, x, y) {

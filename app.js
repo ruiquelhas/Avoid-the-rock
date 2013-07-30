@@ -13,8 +13,8 @@ var mongoose = require('mongoose');
 
 var dbAddress = 'mongodb://localhost/avoidtherock';
 
-var Score = require('./lib/models/score');
-var ScoreController = require('./lib/controllers/scoreController');
+var Player = require('./lib/models/player');
+var PlayerController = require('./lib/controllers/PlayerController');
 
 var app = express();
 
@@ -42,7 +42,7 @@ app.get('/driver', routes.driver);
 
 mongoose.connect(dbAddress);
 
-var scoreController;
+var playerController;
 
 function setUpWebServer(callback) {
   var server = http.createServer(app);
@@ -58,15 +58,15 @@ function setUpRealtimeMiddleware(server, callback) {
   var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
   primus.on('connection', function (spark) {
     function sendOrderedScoreList() {
-      scoreController.allScores(function (err, scores) {
+      playerController.ranking(function (err, players) {
         if (err) console.log('[ERROR]', err);
-        else spark.write({ type: 'ranking-update', payload: scores });
+        else spark.write({ type: 'ranking-update', payload: players });
       });
     }
 
     spark.on('data', function (message) {
       if (message.type === 'score-update') {
-        scoreController.saveScore(message.payload, function (err) {
+        playerController.saveScore(message.payload, function (err) {
           if (err) console.log('[ERROR]', err);
           else sendOrderedScoreList();
         });
@@ -81,8 +81,8 @@ function setUpRealtimeMiddleware(server, callback) {
 }
 
 function loadApp(callback) {
-  scoreController = ScoreController.create(Score, mongoose.connection);
-  scoreController.init(function (err) {
+  playerController = PlayerController.create(Player, mongoose.connection);
+  playerController.init(function (err) {
     if (!err) setUpWebServer(function (server) {
       setUpRealtimeMiddleware(server, callback);
     });
