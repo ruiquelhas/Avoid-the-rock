@@ -11,11 +11,31 @@ var Rock = function (image) {
   this.width = image.width;
 };
 
-Rock.prototype.draw = function (canvas) {
+function objectsCollide(fst, snd) {
+  if (fst.y + fst.height >= snd.y) {
+    if (
+      fst.x + fst.width >= snd.x &&
+      fst.x + fst.width <= snd.x + snd.width ||
+      snd.x + snd.width >= fst.x &&
+      snd.x + snd.width <= fst.x + fst.width
+    )
+      return true;
+  }
+  return false;
+}
+
+Rock.prototype.draw = function (canvas, player) {
+  var status = { over: false, collision: false };
   this.erase(canvas);
   this.y += this.speed;
-  if (this.y > canvas.height) return true;
-  canvas.getContext('2d').drawImage(this.image, this.x, this.y, this.width, this.height);
+  if (this.y > canvas.height) {
+    status.over = true;
+  } else if (objectsCollide(this, player)) {
+    status.collision = true;
+  } else {
+    canvas.getContext('2d').drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+  return status;
 };
 
 Rock.prototype.erase = function (canvas) {

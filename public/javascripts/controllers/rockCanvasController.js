@@ -13,6 +13,10 @@ RockCanvasController.prototype.drawRock = function (image) {
   this.rockPool.get(x, y, speed);
 };
 
+RockCanvasController.prototype.eraseRocks = function () {
+  this.rockPool.clear(this.selector.get(0));
+};
+
 RockCanvasController.prototype.showCanvas = function () {
   this.selector.parent().show();
   this.selector.show();

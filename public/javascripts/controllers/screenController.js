@@ -65,12 +65,7 @@ self.connect = self.connect || function (callback) {
   }, function (err, activity) {
     if (err) return callback(err);
     activity.on('participantQuit', function (participant) {
-      clearInterval(self.rockGenerator);
-      self.playerCanvasController.saveScore();
-      self.playerCanvasController.erasePlayer();
-      self.rockCanvasController.hideCanvas();
-      self.playerCanvasController.hideCanvas();
-      self.statusController.displayMessage();
+      self.terminate();
     });
     activity.on('participantJoin', function (participant) {
       self.run(participant, callback);
@@ -100,8 +95,12 @@ self.run = self.run || function (user, callback) {
     self.rockCanvasController = RockCanvasController.create(rockPool, $actionCanvas);
     self.rockGenerator = setInterval(function () {
       self.rockCanvasController.drawRock(images.rock);
-      var points = rockPool.animate($actionCanvas.get(0));
-      self.playerCanvasController.updateScore(points);
+      var status = rockPool.animate($actionCanvas.get(0), player);
+      if (status.over) {
+        self.terminate();
+      } else {
+        self.playerCanvasController.updateScore(status.points);
+      }
     }, 1000 / 60);
 
     self.manage(user);
@@ -117,4 +116,14 @@ self.manage = self.manage || function (user) {
       self.playerCanvasController.movePlayerLeft(action.v);
     }
   });
+};
+
+self.terminate = self.terminate || function () {
+  clearInterval(self.rockGenerator);
+  self.playerCanvasController.saveScore();
+  self.rockCanvasController.eraseRocks();
+  self.playerCanvasController.erasePlayer();
+  self.rockCanvasController.hideCanvas();
+  self.playerCanvasController.hideCanvas();
+  self.statusController.displayMessage();
 };

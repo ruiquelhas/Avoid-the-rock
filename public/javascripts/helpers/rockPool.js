@@ -18,19 +18,32 @@ RockPool.prototype.get = function (x, y, speed) {
   }
 };
 
-RockPool.prototype.animate = function (canvas) {
-  var points = 0;
+RockPool.prototype.animate = function (canvas, player) {
+  var status = { over: false, points: 0 };
+
   for (var i = 0; i < this.size; i++) {
     if (this.elements[i].alive) {
-      if (this.elements[i].draw(canvas)) {
+      var internalStatus = this.elements[i].draw(canvas, player);
+      if (internalStatus.over) {
         this.elements[i].clear();
         this.elements.push((this.elements.splice(i, 1))[0]);
-        points += 1;
+        status.points += 1;
+      } else if (internalStatus.collision) {
+        status.over = true;
       }
     }
     else break;
   }
-  return points;
+
+  return status;
+};
+
+RockPool.prototype.clear = function (canvas) {
+  for (var i = 0; i < this.size; i++) {
+    if (this.elements[i].alive) {
+      this.elements[i].erase(canvas)
+    }
+  }
 };
 
 module.exports.create = function (size) {
