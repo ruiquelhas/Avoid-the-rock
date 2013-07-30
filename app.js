@@ -101,6 +101,6 @@ module.exports.loadApp = loadApp;
 
 if (!module.parent) {
   loadApp(function (server) {
-    if (server) console.log('[INFO] All components have been installed');
+    if (server) console.log('\n[INFO] All components have been installed');
   });
 }

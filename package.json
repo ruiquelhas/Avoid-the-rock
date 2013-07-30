@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "./scripts/build; make test",
-    "start": "./scripts/build; node app.js"
+    "test": "make build; make test",
+    "start": "make build; node app.js"
   },
   "devDependencies": {
     "zombie": "*",

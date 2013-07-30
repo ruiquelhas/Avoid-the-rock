@@ -1,3 +1,0 @@
-#!/bin/bash
-./node_modules/.bin/browserify --debug ./public/javascripts/controllers/screenController.js > ./public/javascripts/compiled/screenController.js;
-./node_modules/.bin/browserify --debug ./public/javascripts/controllers/driverController.js > ./public/javascripts/compiled/driverController.js

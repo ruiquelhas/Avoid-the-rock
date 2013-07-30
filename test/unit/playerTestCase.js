@@ -1,7 +1,6 @@
 var expect = require('expect.js');
 var sinon = require('sinon');
 
-var Primus = require('primus');
 var Player = require('../../public/javascripts/models/player.js');
 
 module.exports.run = function () {
