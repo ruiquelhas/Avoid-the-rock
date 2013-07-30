@@ -14,9 +14,13 @@ var mongoose = require('mongoose');
 var dbAddress = 'mongodb://localhost/avoidtherock';
 
 var Player = require('./lib/models/player');
-var PlayerController = require('./lib/controllers/PlayerController');
+
+var ConnectionController = require('./lib/controllers/connectionController');
+var PlayerController = require('./lib/controllers/playerController');
 
 var app = express();
+
+var connectionController, playerController;
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -42,11 +46,24 @@ app.get('/driver', routes.driver);
 
 mongoose.connect(dbAddress);
 
-var playerController;
+function sendCurrentRanking(spark) {
+  playerController.ranking(function (err, players) {
+    if (err) console.log('[ERROR]', err);
+    else spark.write({ type: 'ranking-update', payload: players });
+  });
+}
+
+function savePlayerScore(info, spark) {
+  var player = Player.create(info.date, info.score);
+  playerController.saveScore(player, function (err) {
+    if (err) console.log('[ERROR]', err);
+    else sendCurrentRanking(spark);
+  });
+}
 
 function setUpWebServer(callback) {
   var server = http.createServer(app);
-  server.listen(app.get('port'), function(){
+  server.listen(app.get('port'), function () {
     if ('development' === app.get('env')) {
       console.log('[INFO] Express server listening on port ' + app.get('port'));
     }
@@ -57,34 +74,24 @@ function setUpWebServer(callback) {
 function setUpRealtimeMiddleware(server, callback) {
   var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
   primus.on('connection', function (spark) {
-    function sendCurrentRanking() {
-      playerController.ranking(function (err, players) {
-        if (err) console.log('[ERROR]', err);
-        else spark.write({ type: 'ranking-update', payload: players });
-      });
-    }
-
     spark.on('data', function (message) {
       if (message.type === 'score-update') {
-        var player = new Player(message.payload);
-        playerController.saveScore(player, function (err) {
-          if (err) console.log('[ERROR]', err);
-          else sendCurrentRanking();
-        });
+        savePlayerScore(message.payload, spark);
       } else if (message.type === 'disconnect') {
         spark.end();
       }
     });
-
-    sendCurrentRanking();
+    sendCurrentRanking(spark);
   });
   return callback(server);
 }
 
 function loadApp(callback) {
-  playerController = PlayerController.create(Player, mongoose.connection);
-  playerController.init(function (err) {
-    if (!err) setUpWebServer(function (server) {
+  connectionController = ConnectionController.create(mongoose.connection);
+  connectionController.init(function (err) {
+    if (err) console.log('[ERROR]', err);
+    else setUpWebServer(function (server) {
+      playerController = PlayerController.create(Player);
       setUpRealtimeMiddleware(server, callback);
     });
   });
