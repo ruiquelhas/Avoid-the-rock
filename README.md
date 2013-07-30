@@ -39,8 +39,9 @@ assume your IP address is `192.168.1.69`, you need to put the following on your 
 
 Remember the port `3000` reference before? There you go. If you are running a desktop browser, you will be prompted to
 navigate to a `/screen` resource. That is the page where the game canvas is displayed. It is not available on mobile
-browsers, so please, don't try any tricks, because they will not be fruiteful. Of course, you can just go directly to
-that page:
+browsers, so please, don't try any tricks, they will probably not prove fruitful.
+
+Of course, you can just navigate directly to the page:
 
     http://192.168.1.69:3000/screen
 
@@ -61,30 +62,30 @@ Now, you should keep your eyes on the desktop screen because, soon enough, the g
 just have to play.
 
 To move the object on screen, you need to move your device like a steering wheel. The best experience is achieved
-by switching to landscape mode and start making rotations on the x-axis like shown in the following figure (it also
+by switching to landscape mode and start making rotations on the x-axis as shown in the following figure (it also
 appears in the device screen itself):
 
 ![Alt text](https://dl.dropboxusercontent.com/u/903081/alpha.png "Alpha Rotation")
 
-Looks like your playing. Now you just need to avoid the rocks falling from the top of the canvas. For each rock that
+Looks like your playing! Now you just need to avoid the rocks falling from the top of the canvas. For each rock that
 you manage to avoid, you will earn 1 point as soon as it hits the bottom of the canvas.
 
 Your score will be submitted when you loose the game (a rock hits the object) or when you explicitly close the mobile
 driver. When that happens, the canvas is automatically hidden and you are back to square one (URGHHH!), however, this
-time, with the ranking updated your last score. Don't let this fool you, the ranking is updated on the fly as soon as
-any score for player is submitted.
+time, with the ranking updated with your last score. Don't let this fool you, it is updated on the fly as soon as any
+player score is submitted.
 
 That's all folks
 ----------------
 
-Please keep in mind this is just a prototype. There is some buggy stuff that needs to be fixed or improved. The user
-experience sucks a lot.
+Please keep in mind that this is just a prototype. There is some buggy stuff that needs to be fixed or improved. The
+user experience sucks a lot.
 
 ### Some Examples
 
-The rocks are image squares (awesome), and you will laugh as soon as they overlap each other since you will be able
-to see the square area.
+The rocks are images, which implicitly makes them squares (awesome), and you will laugh as soon as they overlap each
+other since you will be able to see the square area.
 
-Also, if you happen to be "forced" to quit the game and you think you managed to avoid the rocks, you probably hit the
-"invisble" square area. As might also noticed, the context is not that great, there are no sessions, no reference to
-current score and you will have to guess which ones are yours from the ranking.
+Also, if you happen to be "forced" to quit the game with a "close call", it means you probably hit the "invisble"
+square area. As might also noticed, the context is not that great, there are no sessions, no reference to current
+score and you will have to guess which ones are yours from the ranking.
