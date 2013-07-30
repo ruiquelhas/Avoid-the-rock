@@ -14,6 +14,8 @@ OUTPUT_DRIVER_CONTROLLER = ./public/javascripts/compiled/driverController.js
 REPORTER = spec
 TIMEOUT = 5000
 
+all: build
+
 build:
 	$(BROWSERIFY) \
 		$(INPUT_SCREEN_CONTROLLER) > $(OUTPUT_SCREEN_CONTROLLER);
@@ -27,4 +29,8 @@ test:
 		-t $(TIMEOUT) \
 		--recursive
 
-.PHONY: build
+clean:
+	rm $(OUTPUT_SCREEN_CONTROLLER);
+	rm $(OUTPUT_DRIVER_CONTROLLER)
+
+.PHONY: all build test clean
