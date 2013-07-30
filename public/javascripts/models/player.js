@@ -1,5 +1,4 @@
 var Player = function (image, x, y) {
-  this.alive = true;
   this.score = 0;
 
   this.image = image;
@@ -11,16 +10,25 @@ var Player = function (image, x, y) {
   this.width = image.width;
 };
 
-Player.prototype.move = function (delta) {
-  this.x += delta;
+Player.prototype.draw = function (canvas) {
+  // first clear the canvas area
+  this.erase(canvas);
+  // then draw
+  canvas.getContext('2d').drawImage(this.image, this.x,
+    this.y, this.width, this.height);
 };
 
-Player.prototype.updateScore = function () {
-  this.score += 1;
+Player.prototype.erase = function (canvas) {
+  canvas.getContext('2d').clearRect(this.x, this.y,
+    this.width, this.height);
 };
 
-Player.prototype.kill = function () {
-  this.alive = false;
+Player.prototype.move = function (delta, margin, canvas) {
+  if (delta < 1) {
+    this.x += (this.x + delta > margin) ? delta : -(this.x - margin);
+  } else {
+    this.x += (this.x + this.width + delta < margin) ? delta : margin - this.x - this.width;
+  }
 };
 
 module.exports.create = function (image, x, y) {

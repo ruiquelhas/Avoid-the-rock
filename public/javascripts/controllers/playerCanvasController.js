@@ -4,31 +4,17 @@ function PlayerCanvasController(player, selector) {
 }
 
 PlayerCanvasController.prototype.drawPlayer = function () {
-  this.selector
-    .get(0)
-    .getContext('2d')
-    .drawImage(this.player.image, this.player.x, this.player.y,
-      this.player.width, this.player.height);
+  this.player.draw(this.selector.get(0));
 };
 
 PlayerCanvasController.prototype.erasePlayer = function () {
-  this.selector
-    .get(0)
-    .getContext('2d')
-    .clearRect(this.player.x, this.player.y,
-      this.player.width, this.player.height);
+  this.player.erase(this.selector.get(0));
 };
 
 PlayerCanvasController.prototype.movePlayerLeft = function (delta) {
   if (delta > 0) {
     this.erasePlayer();
-    // left margin = 1 (because it has 1px border)
-    var marginLeft = 1;
-    if (this.player.x - delta > marginLeft) {
-      this.player.move(-delta);
-    } else {
-      this.player.move(-(this.player.x - marginLeft));
-    }
+    this.player.move(-delta, 1, this.selector.get(0));
     this.drawPlayer();
   }
 };
@@ -36,13 +22,7 @@ PlayerCanvasController.prototype.movePlayerLeft = function (delta) {
 PlayerCanvasController.prototype.movePlayerRight = function (delta) {
   if (delta > 0) {
     this.erasePlayer();
-    // right margin = width - 1 (it has a 1px border)
-    var marginRight = this.selector.width() - 1;
-    if (this.player.x + this.player.width + delta < marginRight) {
-      this.player.move(delta);
-    } else {
-      this.player.move(marginRight - this.player.x - this.player.width);
-    }
+    this.player.move(delta, this.selector.width(), this.selector.get(0));
     this.drawPlayer();
   }
 };

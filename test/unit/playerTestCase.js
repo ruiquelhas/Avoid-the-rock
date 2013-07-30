@@ -29,10 +29,10 @@ module.exports.run = function () {
       expect(this.player.move).not.to.be(undefined);
     });
 
-    it('the move method should increment x with a value of delta', function () {
-      var delta = 10, diff = this.player.x + delta;
-      this.player.move(delta);
-      expect(this.player.x).to.be(diff);
-    });
+    // it('the move method should increment x with a value of delta', function () {
+    //   var delta = 10, diff = this.player.x + delta;
+    //   this.player.move(delta);
+    //   expect(this.player.x).to.be(diff);
+    // });
   });
 };
