@@ -14,7 +14,7 @@ First, and since it is still a very early beta, you need to clone the repo to yo
 Then, and since it is a Node.js (Express) project, you should install the required dependencies. You might as well
 go grab a cup of coffee while you do it, because it takes its time.
 
-    $ npm install
+    $ npm install --production
 
 Back already? Ok, the next step is running the app itself.
 
@@ -24,7 +24,12 @@ The Node HTTP server will start running on port `3000` by default. You should be
 so, if that doesn't matter to you, just push it to the background.
 
 Also, if you really, really want, you can run the available tests, although they are not even close to ensure minimal
-code coverage.
+code coverage. To do that, you need to install the remaining "dev" dependencies. Assuming you are following along, just 
+simply type "again":
+
+    $ npm install
+    
+As soon as everything is installed, you can run the tests with:
 
     $ npm test
 
