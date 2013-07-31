@@ -10,7 +10,6 @@
     "zombie": "*",
     "cheerio": "*",
     "expect.js": "*",
-    "sinon": "*",
     "mocha": "*"
   },
   "dependencies": {

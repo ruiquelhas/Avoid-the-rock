@@ -1,5 +1,4 @@
 var expect = require('expect.js');
-var sinon = require('sinon');
 
 var ImageRepository = require('../../public/javascripts/helpers/ImageRepository');
 
@@ -12,12 +11,8 @@ module.exports.run = function () {
       });
     });
 
-    it('returns a valid instance', function () {
+    it('should return a valid ImageRepository instance', function () {
       expect(this.imageRepository).not.to.be(undefined);
-    });
-
-    it('the instance has a loadImages function', function () {
-      expect(this.imageRepository.load).not.to.be(undefined);
     });
 
     it('should load the provided assets into images', function (done) {

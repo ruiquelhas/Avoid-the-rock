@@ -5,7 +5,7 @@ var Primus = require('primus');
 module.exports.run = function () {
   var context, $;
 
-  describe('test the availability of the screen page', function () {
+  describe('test the screen resource page', function () {
     beforeEach(function (done) {
       context = this.client;
       context.visit('/screen', function () {
@@ -14,38 +14,38 @@ module.exports.run = function () {
       });
     });
 
-    it('the client should be able to visit the page', function () {
+    it('should return a HTTP 200 OK status code', function () {
       expect(context.statusCode).to.be(200);
     });
 
-    it('the client should have a reference to the controller script', function () {
+    it('should have a reference to the controller script', function () {
       expect(context.window.screenController).not.to.be(undefined);
     });
 
-    describe('test the availability of a websocket connection', function () {
-      it('the client should have a reference to the primus library', function () {
+    describe('test the realtime server connection', function () {
+      it('should have a reference to the primus library', function () {
         expect(context.window.Primus).not.to.be(undefined);
       });
 
-      it('the client should have a websocket available', function () {
+      it('should have a Primus instance available', function () {
         expect(context.window.screenController.primus).not.to.be(undefined);
       });
     });
 
     describe('test the essential page components', function () {
-      it('the client should have a reference to the jQuery library', function () {
+      it('should have a reference to the jQuery library', function () {
         expect(context.window.jQuery).not.to.be(undefined);
       });
 
-      it('the client should have a reference to the Muzzley library', function () {
+      it('should have a reference to the Muzzley library', function () {
         expect(context.window.muzzley).not.to.be(undefined);
       });
 
-      it('the page should have two different canvas', function () {
+      it('should have two different canvas', function () {
         expect($('canvas').length).to.be(2);
       });
 
-      it('the canvases should have the same dimensions', function () {
+      it('should have two canvases with the same dimensions', function () {
         var $playerCanvas = $('#player'), $actionCanvas = $('#action');
         expect($playerCanvas.attr('width')).to.be($actionCanvas.attr('width'));
         expect($playerCanvas.attr('height')).to.be($actionCanvas.attr('height'));

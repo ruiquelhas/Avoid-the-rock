@@ -1,5 +1,4 @@
 var expect = require('expect.js');
-var sinon = require('sinon');
 
 var Player = require('../../public/javascripts/models/player.js');
 
@@ -15,16 +14,16 @@ module.exports.run = function () {
       this.player = Player.create(imageMock, x, y);
     });
 
-    it('returns a valid player instance', function () {
+    it('should return a valid Player instance', function () {
       expect(this.player).not.to.be(undefined);
     });
 
-    it('has the provided dimensions', function () {
+    it('should have the required dimensions', function () {
       expect(this.player.width).to.be(imageMock.width);
       expect(this.player.height).to.be(imageMock.height);
     });
 
-    it('is positioned as required', function () {
+    it('should have the required position', function () {
       expect(this.player.x).to.be(x);
       expect(this.player.y).to.be(y);
     });
@@ -48,6 +47,8 @@ module.exports.run = function () {
     it('should increment the score with the update value', function () {
       var expected = this.player.score + 1;
       this.player.update(1);
+      expect(this.player.score).to.be(expected);
+      this.player.update(0);
       expect(this.player.score).to.be(expected);
     });
 

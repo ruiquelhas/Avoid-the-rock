@@ -1,7 +1,6 @@
 var Zombie = require('zombie');
 var expect = require('expect.js');
 
-// var server = require('../../app').httpServer;
 var app = require('../../app');
 var site = 'http://127.0.0.1:' + (process.env.PORT || 3000);
 
@@ -29,11 +28,11 @@ describe('running the integration test suite', function () {
     });
   });
 
-  describe('test the availability of the infrastructure', function () {
-    it('the Express server should be running', function () {
+  describe('test the basic infrastructure', function () {
+    it('should have a running Express server instance', function () {
       expect(this.server).not.to.be(undefined);
     });
-    it('the Zombie.js client should be created', function () {
+    it('should create a Zombie.js client instance', function () {
       expect(this.client).to.be.a(Zombie);
     });
   });
